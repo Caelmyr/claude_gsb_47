@@ -74,7 +74,8 @@ def list_submissions():
 @submissions_bp.get("/submissions/<sub_id>")
 @require_auth
 def get_submission(sub_id):
-    sub = engine.get_submission(sub_id, include_code=False)
+    # 详情接口已在下方做本人/管理员鉴权，需返回源代码供查看
+    sub = engine.get_submission(sub_id, include_code=True)
     if not sub:
         return err("提交不存在", 404)
     is_owner = sub.get("user_id") == request.user["id"]
